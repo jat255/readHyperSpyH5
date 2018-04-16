@@ -33,11 +33,35 @@ ax_navigates = false(1, numAxes);
 % for a 1D [x, y, z, signal] HyperSpy signal, these values all read in
 % as [z, y, x, signal]
 for i = 1:numAxes
-    ax_scales(i) = h5readatt(filename, [name '/axis-' num2str(i-1)], 'scale');
-    ax_units{i} = h5readatt(filename, [name '/axis-' num2str(i-1)], 'units');
-    ax_names{i} = h5readatt(filename, [name '/axis-' num2str(i-1)], 'name');
-    ax_sizes(i) = h5readatt(filename, [name '/axis-' num2str(i-1)], 'size');
-    ax_offsets(i) = h5readatt(filename, [name '/axis-' num2str(i-1)], 'offset');
+    try
+        ax_scales(i) = h5readatt(filename, [name '/axis-' num2str(i-1)], 'scale');
+    catch
+        ax_scales(i) = 'Undefined';
+    end
+    
+    try
+        ax_units{i} = h5readatt(filename, [name '/axis-' num2str(i-1)], 'units');
+    catch
+        ax_units{i} = 'Undefined';
+    end
+    
+    try
+        ax_names{i} = h5readatt(filename, [name '/axis-' num2str(i-1)], 'name');
+    catch
+        ax_names{i} = 'Undefined';
+    end
+    
+    try
+        ax_sizes(i) = h5readatt(filename, [name '/axis-' num2str(i-1)], 'size');
+    catch
+        ax_sizes(i) = 'Undefined';
+    end
+    
+    try
+        ax_offsets(i) = h5readatt(filename, [name '/axis-' num2str(i-1)], 'offset');
+    catch
+        ax_offsets(i) = 'Undefined';
+    end
     % For some reason, h5readatt doesn't work on navigate, which is ENUM
     % datatype, so use low-level functions instead
     %   navigates{i} = h5readatt(filename, [name '/axis-' num2str(i-1)], 'navigate');
